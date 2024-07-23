@@ -32,6 +32,6 @@ jobs:
     - uses: actions/setup-node@v2
       with:
         node-version: '20'
-    - run: npm install -b bats
-    - run: bats --version
+    - run: npm install -g bats
+    - run: bats -v
 
