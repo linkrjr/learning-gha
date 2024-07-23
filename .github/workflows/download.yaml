@@ -1,0 +1,29 @@
+name: Download
+
+run-name: Download
+
+on: [push]
+
+jobs:
+  demo:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - shell: bash
+        run: |
+          echo "Hello, world!" > hello.log
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: hello-file.log
+          path: hello.log
+      - name: Dump Github context
+        env: 
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+      - name: Dump Job context
+        env: 
+          JOB_CONTEXT: ${{ toJson(job) }}
+        run: echo "$JOB_CONTEXT"        

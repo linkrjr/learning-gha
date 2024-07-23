@@ -5,33 +5,17 @@ run-name: ${{ github.actor }} is testing out github actions
 on: [push]
 
 jobs:
-  explore-github-actions:
+  demo:
     runs-on: ubuntu-latest
 
     steps:
-    - run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
-    - run: echo "This job is running on ${{ runner.os }}"
-    - run: echo "Branch name ${{ github.ref }}"
-
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - run: echo "Repo ${{ github.repository }} has been cloned"
-    
-    - name: List files in the repo
-      run: |
-        ls ${{ github.workspace }}
-    
-    - run: echo "job status ${{ job.status}}"
-  
-  check-bats-version:
-    runs-on: ubuntu-latest
-    needs: explore-github-actions
-    steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v2
-      with:
-        node-version: '20'
-    - run: npm install -g bats
-    - run: bats -v
-
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - shell: bash
+        run: |
+          echo "Hello, world!" > hello.log
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: hello-file.log
+          path: hello.log
