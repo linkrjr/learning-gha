@@ -25,16 +25,16 @@ jobs:
           ref: ${{ github.event.pull_request.head.ref }}
           repository: ${{ github.event.pull_request.head.repo.full_name }}
 
-      # - name: 'Automated Version bump'
-      #   uses: 'phips28/gh-action-bump-version@master'
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #     minor-wording:  'add,Adds,new'
-      #     major-wording:  'MAJOR,cut-major'
-      #     patch-wording:  'patch,fixes'
-      #     rc-wording:     'RELEASE,alpha'      
-      #     tag-prefix:     'v'    
-      #     commit-message: 'CI: bumps version to {{version}} [skip ci]'
+      - name: 'Automated Version bump'
+        uses: 'phips28/gh-action-bump-version@master'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          minor-wording:  'add,Adds,new'
+          major-wording:  'MAJOR,cut-major'
+          patch-wording:  'patch,fixes'
+          rc-wording:     'RELEASE,alpha'      
+          tag-prefix:     'v'    
+          commit-message: 'CI: bumps version to {{version}}'
 
       - name: Auth with Tyro Private NPM Registry
         run: |
