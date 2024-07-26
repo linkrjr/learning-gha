@@ -29,5 +29,5 @@ jobs:
       - name: versions
         run: npm view @linkrjr/learning-gha versions --json
 
-      # - name: Bump Package Version & Publish
-      #   uses: 'g33kio/npm-version-bump@master'  
+      - name: Bump Package Version & Publish
+        uses: 'g33kio/npm-version-bump@master'  
