@@ -16,11 +16,16 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           repository: ${{ github.event.pull_request.head.repo.full_name }}
-      - name: Check for Version Bump
-        uses: bachmacintosh/need-npm-package-version-bump@v1
 
       - name: 'Automated Version bump'
         uses: 'phips28/gh-action-bump-version@master'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
+      - name: Auth with Tyro Private NPM Registry
+        run: |
+          echo "registry=https://registry.npmjs.org/" > "${HOME}/.npmrc"
+          echo "@tyro-private:registry=https://npm.pkg.github.com" >> "${HOME}/.npmrc"
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > "${HOME}/.npmrc"
+      - name: Publish NPM
+        run: npm publish
