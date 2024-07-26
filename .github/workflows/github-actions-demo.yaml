@@ -4,6 +4,7 @@ run-name: ${{ github.actor }} is testing out github actions
 
 on:
   pull_request:
+  pull_request_target:
 
 jobs:
   publish:
@@ -12,5 +13,12 @@ jobs:
     steps:
       - name: Checkout Source Code
         uses: 'actions/checkout@v4'
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
       - name: Check for Version Bump
         uses: bachmacintosh/need-npm-package-version-bump@v1
+
+      - name: 'Automated Version bump'
+        uses: 'phips28/gh-action-bump-version@master'
+          
