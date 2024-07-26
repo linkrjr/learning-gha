@@ -27,5 +27,9 @@ jobs:
           echo "registry=https://registry.npmjs.org/" > "${HOME}/.npmrc"
           echo "@tyro-private:registry=https://npm.pkg.github.com" >> "${HOME}/.npmrc"
           echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > "${HOME}/.npmrc"
+
+      - run: npm ci
       - name: Publish NPM
-        run: npm publish
+        run: npm publish --provenance --access public
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
