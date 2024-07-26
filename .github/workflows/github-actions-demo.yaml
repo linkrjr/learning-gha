@@ -26,5 +26,8 @@ jobs:
           echo "@linkrjr:registry=https://npm.pkg.github.com" >> "${HOME}/.npmrc"
           echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> "${HOME}/.npmrc"
 
-      - name: Bump Package Version & Publish
-        uses: 'g33kio/npm-version-bump@master'  
+      - name: versions
+        run: npm view @linkrjr/learning-gha versions --json
+
+      # - name: Bump Package Version & Publish
+      #   uses: 'g33kio/npm-version-bump@master'  
