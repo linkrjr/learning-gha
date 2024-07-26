@@ -26,9 +26,5 @@ jobs:
           echo "@linkrjr:registry=https://npm.pkg.github.com" >> "${HOME}/.npmrc"
           echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> "${HOME}/.npmrc"
 
-      - name: Publish NPM
-        run: |
-          NPM_CONFIG_EMAIL=rongomes15@gmail.com npm publish build/distributions/${{ github.event.repository.name }}-*.tgz --verbose --registry=https://npm.pkg.github.com/          
-
       - name: Bump Package Version & Publish
         uses: 'g33kio/npm-version-bump@master'  
