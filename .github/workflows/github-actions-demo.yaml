@@ -17,7 +17,18 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20.x'
-        # env:
-        #   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Auth with Tyro Private NPM Registry
+        run: |
+          echo "registry=https://registry.npmjs.org/" > "${HOME}/.npmrc"
+          echo "@linkrjr:registry=https://npm.pkg.github.com" >> "${HOME}/.npmrc"
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > "${HOME}/.npmrc"
+
+      - name: Publish NPM
+        run: |
+          NPM_CONFIG_EMAIL=banking@tyro.com npm publish build/distributions/${{ github.event.repository.name }}-*.tgz --verbose --registry=https://npm.pkg.github.com/          
+
       - name: Bump Package Version & Publish
         uses: 'g33kio/npm-version-bump@master'  
