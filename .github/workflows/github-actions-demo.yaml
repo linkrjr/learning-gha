@@ -13,21 +13,5 @@ jobs:
     steps:
       - name: Checkout Source Code
         uses: 'actions/checkout@v4'
-      - name: Setup Node 20
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20.x'
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Auth with Tyro Private NPM Registry
-        run: |
-          echo "registry=https://registry.npmjs.org/" > "${HOME}/.npmrc"
-          echo "@linkrjr:registry=https://npm.pkg.github.com" >> "${HOME}/.npmrc"
-          echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> "${HOME}/.npmrc"
-
-      - name: versions
-        run: npm view @linkrjr/learning-gha versions --json
-
-      - name: Bump Package Version & Publish
-        uses: 'g33kio/npm-version-bump@master'  
+      - name: Check for Version Bump
+        uses: bachmacintosh/need-npm-package-version-bump@v1
