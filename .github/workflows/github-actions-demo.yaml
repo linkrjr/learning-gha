@@ -21,7 +21,11 @@ jobs:
         uses: 'phips28/gh-action-bump-version@master'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          
+          minor-wording:  'add,Adds,new'
+          major-wording:  'MAJOR,cut-major'
+          patch-wording:  'patch,fixes'
+          rc-wording:     'RELEASE,alpha'          
+
       - name: Auth with Tyro Private NPM Registry
         run: |
           echo "registry=https://registry.npmjs.org/" > "${HOME}/.npmrc"
