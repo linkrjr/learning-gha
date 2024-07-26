@@ -1,0 +1,25 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - '*'
+      - '!main'
+      - '!master'
+jobs:
+  ci:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: 'actions/checkout@v4'
+
+      - name: Setup
+        uses: 'actions/setup-node@v4'
+        with:
+          node-version: '20'
+
+      - name: Run Tests
+        run: |
+          npm ci
+          npm test

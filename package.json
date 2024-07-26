@@ -1,13 +1,16 @@
 {
   "name": "@linkrjr/learning-gha",
-  "version": "1.0.0",
+  "version": "1.0.10",
   "description": "",
   "main": "index.js",
   "repository": "https://github.com/linkrjr/learning-gha.git",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest ."
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
 }

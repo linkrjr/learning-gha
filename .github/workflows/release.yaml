@@ -1,0 +1,48 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - 'main'
+  pull_request:
+    types:
+      - closed
+    branches:
+      - 'main'
+
+jobs:
+  publish:
+    permissions:
+      packages: write
+      id-token: write
+      contents: write    
+    name: Publish Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: 'actions/checkout@v4'
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+
+      - name: 'Automated Version bump'
+        uses: 'phips28/gh-action-bump-version@master'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          minor-wording:  'add,Adds,new'
+          major-wording:  'MAJOR,cut-major'
+          patch-wording:  'patch,fixes'
+          rc-wording:     'RELEASE,alpha'      
+          tag-prefix:     'v'    
+          commit-message: 'CI: bumps version to {{version}} [skip ci]'
+
+      - name: Auth with Tyro Private NPM Registry
+        run: |
+          echo "registry=https://registry.npmjs.org/" > "${HOME}/.npmrc"
+          echo "@tyro-private:registry=https://npm.pkg.github.com" >> "${HOME}/.npmrc"
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > "${HOME}/.npmrc"
+
+      - uses: JS-DevTools/npm-publish@v3
+        with: 
+          token: ${{ secrets.GITHUB_TOKEN }}
+          registry: 'https://npm.pkg.github.com'
