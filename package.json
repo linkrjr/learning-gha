@@ -1,8 +1,9 @@
 {
-  "name": "learning-gha",
+  "name": "@linkrjr/learning-gha",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "repository": "https://github.com/linkrjr/learning-gha.git",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
