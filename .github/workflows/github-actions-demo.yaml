@@ -1,13 +1,15 @@
 name: Github actions demo
 
-run-name: ${{ github.actor }} is testing out github actions
-
 on:
   pull_request:
   pull_request_target:
 
 jobs:
   publish:
+    permissions:
+      packages: write
+      id-token: write
+      contents: write    
     name: Publish Release
     runs-on: ubuntu-latest
     steps:
@@ -24,7 +26,9 @@ jobs:
           minor-wording:  'add,Adds,new'
           major-wording:  'MAJOR,cut-major'
           patch-wording:  'patch,fixes'
-          rc-wording:     'RELEASE,alpha'          
+          rc-wording:     'RELEASE,alpha'      
+          tag-prefix:     'v'    
+          commit-message: 'CI: bumps version to {{version}} [skip ci]'
 
       - name: Auth with Tyro Private NPM Registry
         run: |
@@ -37,8 +41,3 @@ jobs:
         with: 
           token: ${{ secrets.GITHUB_TOKEN }}
           registry: 'https://npm.pkg.github.com'
-
-      # - name: Publish NPM
-      #   run: npm publish --provenance --access public
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
