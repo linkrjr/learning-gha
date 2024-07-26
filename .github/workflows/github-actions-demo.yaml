@@ -2,20 +2,23 @@ name: Github actions demo
 
 run-name: ${{ github.actor }} is testing out github actions
 
-on: [push]
-
+on:
+  workflow_dispatch:
+  push: 
+    
 jobs:
-  demo:
+  publish:
+    name: Publish Release
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - shell: bash
-        run: |
-          echo "Hello, world!" > hello.log
-      - name: Upload
-        uses: actions/upload-artifact@v4
+      - name: Checkout Source Code
+        uses: 'actions/checkout@v4'
+      - name: Setup Node 20
+        uses: actions/setup-node@v4
         with:
-          name: hello-file.log
-          path: hello.log
+          node-version: '20.x'
+          registry-url: 'https://registry.npmjs.org'
+        # env:
+        #   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Bump Package Version & Publish
+        uses: 'g33kio/npm-version-bump@master'  
