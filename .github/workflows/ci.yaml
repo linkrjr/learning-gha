@@ -8,8 +8,9 @@ on:
       - '!master'
 jobs:
   ci:
-    name: Test
+    environment: Sandbox
     runs-on: ubuntu-latest
+    name: Test
     steps:
       - name: Checkout Source Code
         uses: 'actions/checkout@v4'
