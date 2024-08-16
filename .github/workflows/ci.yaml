@@ -8,7 +8,7 @@ on:
       - '!master'
 jobs:
   ci:
-    environment: Development
+    environment: Sandbox
     runs-on: ubuntu-latest
     name: Test
     steps:
